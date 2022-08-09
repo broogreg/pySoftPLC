@@ -22,6 +22,16 @@
 #
 # Important:	WHEN EDITING THIS FILE, USE TABS TO INDENT - NOT SPACES!
 ##############################################################################
+# Code migrated to Python 3.9
+# Project: 	        pySoftLogic
+# Module: 	        DLCkInstrLib.py
+# Purpose: 	        Define instructions strings for a DL Click-like PLC.
+# Language:	        Python 3.9
+# Date:		        09-Aug-2011.
+# Editing Author:	G. Brooks.
+# Copyright:	2007-2009 - Michael Griffin   <m.os.griffin@gmail.com>
+# 
+##############################################################################
 
 """
 This module implements instruction strings which are unique to the PLC model

@@ -22,6 +22,16 @@
 #
 # Important:	WHEN EDITING THIS FILE, USE TABS TO INDENT - NOT SPACES!
 ##############################################################################
+# Code migrated to Python 3.9
+# Project: 	        pySoftLogic
+# Module: 	        DLCkAddrValidate.py
+# Purpose: 	        Define address validators for a Click-like PLC.
+# Language:	        Python 3.9
+# Date:		        09-Aug-2011.
+# Editing Author:	G. Brooks.
+# Copyright:	2007-2009 - Michael Griffin   <m.os.griffin@gmail.com>
+# 
+##############################################################################
 """
 This module defines the address validator functions for the compiler 
 for a DL Click-like PLC. This needs to be customised for each model of PLC being 
