@@ -21,8 +21,15 @@
 #
 # Important:	WHEN EDITING THIS FILE, USE TABS TO INDENT - NOT SPACES!
 ##############################################################################
-
-
+# Code migrated to Python 3.9
+# Project: 	        pySoftLogic
+# Module: 	        PLCInterp.py
+# Purpose: 	        Interpreter.
+# Language:	        Python 3.9
+# Date:		        09-Aug-2011.
+# Editing Author:	G. Brooks.
+# Copyright:	2007-2009 - Michael Griffin   <m.os.griffin@gmail.com>
+# 
 ########################################################################
 class PLCExitCode(Exception):
 	"""Create a class to allow exiting from the interpreter.
