@@ -22,6 +22,16 @@
 #
 # Important:	WHEN EDITING THIS FILE, USE TABS TO INDENT - NOT SPACES!
 ##############################################################################
+# Code migrated to Python 3.9
+# Project: 	        pySoftLogic
+# Module: 	        PLCLadder.py
+# Purpose: 	        Generic ladder display format for a soft logic system.
+# Language:	        Python 3.9
+# Date:		        09-Aug-2011.
+# Editing Author:	G. Brooks.
+# Copyright:	2007-2009 - Michael Griffin   <m.os.griffin@gmail.com>
+# 
+##############################################################################
 
 """Generate ladder data matrices for displaying ladder logic in a web browser.
 This creates the JSON data arrays. The web browser is responsible for converting

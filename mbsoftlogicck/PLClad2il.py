@@ -22,6 +22,16 @@
 #
 # Important:	WHEN EDITING THIS FILE, USE TABS TO INDENT - NOT SPACES!
 ##############################################################################
+# Code migrated to Python 3.9
+# Project: 	        pySoftLogic
+# Module: 	        PLCLad2ilr.py
+# Purpose: 	        Convert ladder to instruction list.
+# Language:	        Python 3.9
+# Date:		        09-Aug-2011.
+# Editing Author:	G. Brooks.
+# Copyright:	2007-2009 - Michael Griffin   <m.os.griffin@gmail.com>
+# 
+##############################################################################
 
 """This is used to convert a ladder matrix back into IL.
 """

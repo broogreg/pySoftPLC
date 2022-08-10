@@ -22,6 +22,16 @@
 #
 # Important:	WHEN EDITING THIS FILE, USE TABS TO INDENT - NOT SPACES!
 ##############################################################################
+# Code migrated to Python 3.9
+# Project: 	        pySoftLogic
+# Module: 	        DLCkMath.py
+# Purpose: 	        Math functions for a DL Clock-like PLC.
+# Language:	        Python 3.9
+# Date:		        09-Aug-2011.
+# Editing Author:	G. Brooks.
+# Copyright:	2007-2009 - Michael Griffin   <m.os.griffin@gmail.com>
+# 
+##############################################################################
 
 import re
 import math
