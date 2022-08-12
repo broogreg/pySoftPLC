@@ -3,6 +3,10 @@
 // soft logic system.
 // 03-Dec-2008. M. Griffin.
 // Updated 07-Nov-2009. M. Griffin.
+// Udated 08-Aug-2022 G. Brooks
+// See MBLogic Manual starting page 167 to understand Instruction List (IL) statements
+// SC1 = Always ON
+// SC3 = Turns on and off on alternate scans
 
 
 // This is a counter.
