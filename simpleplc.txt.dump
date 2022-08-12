@@ -1,0 +1,26 @@
+# NETWORK 1
+PLC_RUNGNUMBER = 1
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# STR X1
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = PLC_DataBool['X1']
+#####
+# OR C100
+PLC_STACKTOP = PLC_STACKTOP or PLC_DataBool['C100']
+#####
+# AND X2
+PLC_STACKTOP = PLC_STACKTOP and (PLC_DataBool['X2'])
+#####
+# OUT C100
+PLC_DataBool['C100'] = PLC_STACKTOP
+#####
+# NETWORK 2
+PLC_RUNGNUMBER = 2
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# END 
+raise PLC_ExitCode('normal_end_requested')
+#####

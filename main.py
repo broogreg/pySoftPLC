@@ -10,7 +10,7 @@ from mbsoftlogicck import DLCkLibs
 
 # Compiler for PLC program.
 PLCCompiler = PLCCompile.PLCCompiler(DLCkInstructions.InstrDefList, 
-                                         DLCkDataTable.InstrDataTable,"demoplcprog.txt")
+                                         DLCkDataTable.InstrDataTable,"D:\Python\SoftPLC\demoplcprog_orig.txt")
 
 # Read in the PLC program.
 PLCCompiler.ReadInFile()
@@ -36,15 +36,16 @@ if (not CompileErrors):
 # Update the data table with new inputs. In a real application the values
 # would be variables passed in from the main application. A similar function
 # is available for the word data table. 
-MainInterp.SetBoolData({'X17' : True, 'X277' : False})
+MainInterp.SetBoolData({'X1': True,'X2': False,'X17' : True, 'X277' : False})
 
 # This causes the PLC program to be executed once.
 MainInterp.MainLoop()
 
 # This is gets the updated data table elements to be passed to the rest of
 # the application. 
-BData = MainInterp.GetBoolData(['Y1', 'Y367', 'C50', 'CT100'])
+BData = MainInterp.GetBoolData(['C100', 'Y1', 'Y367', 'C50', 'CT100'])
 
 # Get the program exit code to see if the PLC program exited normally, or
 # if there was an error.
 ExitCode, ExitSubr, ExitRung = MainInterp.GetExitCode()
+print(f"ExitCode:{ExitCode} ExitSubr:{ExitSubr} ExitRung:{ExitRung}")

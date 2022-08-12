@@ -1,0 +1,153 @@
+# SBR Sub1
+def PLC_Subroutine_Sub1():
+	global PLC_RUNGNUMBER
+	global PLC_SUBROUTINE
+	PLC_RUNGNUMBER = 0
+	PLC_SUBROUTINE = 'Sub1'
+	PLC_STACKTOP = False
+#####
+	# NETWORK 1
+	PLC_RUNGNUMBER = 1
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# STR SC1
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['SC1']
+	#####
+	# MATHDEC DS100 0 SQRT(DD1 + 25)
+	if (PLC_STACKTOP and (not PLC_InstrDT['1'] or not 0)):
+		PLC_DataBool['SC40'] = False
+		PLC_DataBool['SC43'] = False
+		PLC_DataBool['SC46'] = False
+		try:
+			PLC_Temp1 = int(PLC_BinMathLib.sqrt(PLC_DataWord['DD1']+25))
+			if (PLC_BinMathLib.RangeError(PLC_Temp1, 'DS')):
+				PLC_DataBool['SC43'] = True
+			else:
+				PLC_DataWord['DS100'] = PLC_Temp1
+		except ZeroDivisionError:
+			PLC_DataBool['SC40'] = True
+		except:
+			PLC_DataBool['SC46'] = True
+	PLC_InstrDT['1'] = PLC_STACKTOP
+	#####
+	# STRGE DS100 1
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataWord['DS100'] >= 1
+	#####
+	# OUT C50
+	PLC_DataBool['C50'] = PLC_STACKTOP
+	#####
+	# RT 
+	PLC_SUBROUTINE, PLC_RUNGNUMBER = PLC_CALLSTACK.StackTop()
+	PLC_CALLSTACK.PopSub()
+	return
+	#####
+# // Demo program for MBLogicEngineCk.
+#
+#####
+# // This is used to demonstrate some of the features in the MBLogicEngineCk
+#
+#####
+# // soft logic system.
+#
+#####
+# // 03-Dec-2008. M. Griffin.
+#
+#####
+# // Updated 07-Nov-2009. M. Griffin.
+#
+#####
+# // This is a counter.
+#
+#####
+# NETWORK 1
+PLC_RUNGNUMBER = 1
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# STR X1
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = PLC_DataBool['X1']
+#####
+# STR SC1
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = PLC_DataBool['SC1']
+#####
+# AND SC3
+PLC_STACKTOP = PLC_STACKTOP and (PLC_DataBool['SC3'])
+#####
+# CNTU CT100 11
+try:
+	PLC_TEMP1 = PLC_LOGICSTACK[-1]
+except:
+	PLC_TEMP1 = False
+PLC_CounterTimers.Counter(PLC_STACKTOP, False, PLC_TEMP1, 'CT100', 11, True)
+#####
+# // This is a timer
+#
+#####
+# NETWORK 2
+PLC_RUNGNUMBER = 2
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# STR SC1
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = PLC_DataBool['SC1']
+#####
+# TMR T5 329 ms
+PLC_CounterTimers.TimerTMR(PLC_STACKTOP, 'T5', 329, 'ms')
+#####
+# STR T5
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = PLC_DataBool['T5']
+#####
+# OUT Y367
+PLC_DataBool['Y367'] = PLC_STACKTOP
+#####
+# // This calls a subroutine.
+#
+#####
+# NETWORK 3
+PLC_RUNGNUMBER = 3
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# STR T5
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = PLC_DataBool['T5']
+#####
+# CALL Sub1
+if PLC_STACKTOP:
+	PLC_CALLSTACK.PushSub(PLC_SUBROUTINE, PLC_RUNGNUMBER)
+	PLC_Subroutine_Sub1()
+#####
+# // This just executes some ladder logic.
+#
+#####
+# NETWORK 4
+PLC_RUNGNUMBER = 4
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# STR SC1
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = PLC_DataBool['SC1']
+#####
+# ORN C2
+PLC_STACKTOP = PLC_STACKTOP or (not PLC_DataBool['C2'])
+#####
+# AND X17
+PLC_STACKTOP = PLC_STACKTOP and (PLC_DataBool['X17'])
+#####
+# OUT Y1
+PLC_DataBool['Y1'] = PLC_STACKTOP
+#####
+# END 
+raise PLC_ExitCode('normal_end_requested')
+#####
+# // This is a subroutine.
+#
+#####
