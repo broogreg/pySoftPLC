@@ -10,7 +10,7 @@ from mbsoftlogicck import DLCkLibs
 
 # Compiler for PLC program.
 PLCCompiler = PLCCompile.PLCCompiler(DLCkInstructions.InstrDefList, 
-                                         DLCkDataTable.InstrDataTable,"D:\Python\SoftPLC\demoplcprog_orig.txt")
+                                         DLCkDataTable.InstrDataTable,"plcprog.txt")
 
 # Read in the PLC program.
 PLCCompiler.ReadInFile()
@@ -33,6 +33,9 @@ if (not CompileErrors):
                     DLCkLibs.BinMathLib, DLCkLibs.FloatMathLib, DLCkLibs.BCDMathLib,
                     DLCkLibs.WordConversions, DLCkLibs.CounterTimers, DLCkLibs.SystemScan)
 
+BData = MainInterp.GetBoolData(['C100', 'Y1', 'Y367', 'C50', 'CT100'])
+print(f"Before: C100:{BData['C100']} Y1:{BData['Y1']} Y367:{BData['Y367']} C50:{BData['C50']} CT100:{BData['CT100']}")
+
 # Update the data table with new inputs. In a real application the values
 # would be variables passed in from the main application. A similar function
 # is available for the word data table. 
@@ -44,6 +47,7 @@ MainInterp.MainLoop()
 # This is gets the updated data table elements to be passed to the rest of
 # the application. 
 BData = MainInterp.GetBoolData(['C100', 'Y1', 'Y367', 'C50', 'CT100'])
+print(f"After: C100:{BData['C100']} Y1:{BData['Y1']} Y367:{BData['Y367']} C50:{BData['C50']} CT100:{BData['CT100']}")
 
 # Get the program exit code to see if the PLC program exited normally, or
 # if there was an error.
