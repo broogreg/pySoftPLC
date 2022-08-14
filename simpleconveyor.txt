@@ -1,0 +1,21 @@
+// Program to drive the FactoryIO Scene Simple Conveyor
+// 08/13/2022 Gregory Brooks
+//
+// X1=EStop, X2=Stop, X3=Start, Y1=Belt Conveyor
+//
+//    X1   X2   X3   Y1
+// |--] [--] [--] [--( )
+//            |     |
+//            | Y1  |
+//            --] [--
+
+NETWORK 1
+STR X1
+AND X2
+STR X3
+OR Y1
+ANDSTR
+OUT Y1
+
+NETWORK 2
+END
