@@ -1,0 +1,911 @@
+# SBR LadderDemo
+def PLC_Subroutine_LadderDemo():
+	global PLC_RUNGNUMBER
+	global PLC_SUBROUTINE
+	PLC_RUNGNUMBER = 0
+	PLC_SUBROUTINE = 'LadderDemo'
+	PLC_STACKTOP = False
+#####
+	# // Demonstrate different ladder instructions.This subroutine doesn't actually do anything useful.
+	#
+	#####
+	# NETWORK 1
+	PLC_RUNGNUMBER = 1
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // A simple rung.
+	#
+	#####
+	# STR C1
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['C1']
+	#####
+	# OR T1
+	PLC_STACKTOP = PLC_STACKTOP or PLC_DataBool['T1']
+	#####
+	# ANDN CT5
+	PLC_STACKTOP = PLC_STACKTOP and (not PLC_DataBool['CT5'])
+	#####
+	# OUT C100
+	PLC_DataBool['C100'] = PLC_STACKTOP
+	#####
+	# NETWORK 2
+	PLC_RUNGNUMBER = 2
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // More complex rungs are also possible.
+	#
+	#####
+	# STRN T5
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = not PLC_DataBool['T5']
+	#####
+	# ORN C1
+	PLC_STACKTOP = PLC_STACKTOP or (not PLC_DataBool['C1'])
+	#####
+	# AND C2
+	PLC_STACKTOP = PLC_STACKTOP and (PLC_DataBool['C2'])
+	#####
+	# STRE DS100 50
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataWord['DS100'] == 50
+	#####
+	# ANDGT DS112 YS20
+	PLC_STACKTOP = PLC_STACKTOP and (PLC_DataWord['DS112'] > PLC_DataWord['YS20'])
+	#####
+	# ORPD C100
+	PLC_STACKTOP = PLC_STACKTOP or (PLC_DataBool['C100'] and not PLC_InstrDT['2'])
+	PLC_InstrDT['2'] = PLC_DataBool['C100']
+	#####
+	# ANDSTR 
+	try:
+		PLC_STACKTOP = PLC_STACKTOP and PLC_LOGICSTACK[-1]
+		PLC_LOGICSTACK.pop()
+	except:
+		PLC_STACKTOP = False
+	#####
+	# SET C101
+	if PLC_STACKTOP: PLC_DataBool['C101'] = True
+	#####
+	# NETWORK 3
+	PLC_RUNGNUMBER = 3
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // When a rung cannot be represented as ladder, it defaults to IL.
+	#
+	#####
+	# // This is valid logic, but has no ladder equivalent.
+	#
+	#####
+	# STR T5
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['T5']
+	#####
+	# OUT C102
+	PLC_DataBool['C102'] = PLC_STACKTOP
+	#####
+	# AND C101
+	PLC_STACKTOP = PLC_STACKTOP and (PLC_DataBool['C101'])
+	#####
+	# OUT C103
+	PLC_DataBool['C103'] = PLC_STACKTOP
+	#####
+	# NETWORK 4
+	PLC_RUNGNUMBER = 4
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Incorrect instruction combinations will also default to IL,
+	#
+	#####
+	# // as they also can't be represented in ladder.
+	#
+	#####
+	# STRN SC1
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = not PLC_DataBool['SC1']
+	#####
+	# ORSTR 
+	try:
+		PLC_STACKTOP = PLC_STACKTOP or PLC_LOGICSTACK[-1]
+		PLC_LOGICSTACK.pop()
+	except:
+		PLC_STACKTOP = False
+	#####
+	# SET C47
+	if PLC_STACKTOP: PLC_DataBool['C47'] = True
+	#####
+	# NETWORK 5
+	PLC_RUNGNUMBER = 5
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Boolean input and output instructions.
+	#
+	#####
+	# STR C10
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['C10']
+	#####
+	# AND C11
+	PLC_STACKTOP = PLC_STACKTOP and (PLC_DataBool['C11'])
+	#####
+	# OR C12
+	PLC_STACKTOP = PLC_STACKTOP or PLC_DataBool['C12']
+	#####
+	# STRN C13
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = not PLC_DataBool['C13']
+	#####
+	# ANDN C14
+	PLC_STACKTOP = PLC_STACKTOP and (not PLC_DataBool['C14'])
+	#####
+	# ORN C15
+	PLC_STACKTOP = PLC_STACKTOP or (not PLC_DataBool['C15'])
+	#####
+	# ANDSTR 
+	try:
+		PLC_STACKTOP = PLC_STACKTOP and PLC_LOGICSTACK[-1]
+		PLC_LOGICSTACK.pop()
+	except:
+		PLC_STACKTOP = False
+	#####
+	# STR C16
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['C16']
+	#####
+	# OR C17
+	PLC_STACKTOP = PLC_STACKTOP or PLC_DataBool['C17']
+	#####
+	# AND C18
+	PLC_STACKTOP = PLC_STACKTOP and (PLC_DataBool['C18'])
+	#####
+	# ORSTR 
+	try:
+		PLC_STACKTOP = PLC_STACKTOP or PLC_LOGICSTACK[-1]
+		PLC_LOGICSTACK.pop()
+	except:
+		PLC_STACKTOP = False
+	#####
+	# OUT C104
+	PLC_DataBool['C104'] = PLC_STACKTOP
+	#####
+	# OUT C105 C108
+	PLC_WordAccessors.Setbits(PLC_STACKTOP, 'C105', 'C108')
+	#####
+	# SET C109
+	if PLC_STACKTOP: PLC_DataBool['C109'] = True
+	#####
+	# SET C110 C112
+	if PLC_STACKTOP:
+		PLC_WordAccessors.Setbits(True, 'C110', 'C112')
+	#####
+	# RST C113
+	if PLC_STACKTOP: PLC_DataBool['C113'] = False
+	#####
+	# RST C114 C115
+	if PLC_STACKTOP:
+		PLC_WordAccessors.Setbits(False, 'C114', 'C115')
+	#####
+	# NETWORK 6
+	PLC_RUNGNUMBER = 6
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Edge contact instructions.
+	#
+	#####
+	# STRPD C1
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['C1'] and not PLC_InstrDT['3']
+	PLC_InstrDT['3'] = PLC_DataBool['C1']
+	#####
+	# ANDPD C2
+	PLC_STACKTOP = PLC_STACKTOP and (PLC_DataBool['C2'] and not PLC_InstrDT['4'])
+	PLC_InstrDT['4'] = PLC_DataBool['C2']
+	#####
+	# ORPD C5
+	PLC_STACKTOP = PLC_STACKTOP or (PLC_DataBool['C5'] and not PLC_InstrDT['5'])
+	PLC_InstrDT['5'] = PLC_DataBool['C5']
+	#####
+	# STRND C3
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = (not PLC_DataBool['C3']) and PLC_InstrDT['6']
+	PLC_InstrDT['6'] = PLC_DataBool['C3']
+	#####
+	# ANDND C4
+	PLC_STACKTOP = PLC_STACKTOP and (not PLC_DataBool['C4'] and PLC_InstrDT['7'])
+	PLC_InstrDT['7'] = PLC_DataBool['C4']
+	#####
+	# ORND C6
+	PLC_STACKTOP = PLC_STACKTOP or (not PLC_DataBool['C6'] and PLC_InstrDT['8'])
+	PLC_InstrDT['8'] = PLC_DataBool['C6']
+	#####
+	# ANDSTR 
+	try:
+		PLC_STACKTOP = PLC_STACKTOP and PLC_LOGICSTACK[-1]
+		PLC_LOGICSTACK.pop()
+	except:
+		PLC_STACKTOP = False
+	#####
+	# PD C116
+	PLC_DataBool['C116'] = PLC_STACKTOP and not PLC_InstrDT['9']
+	PLC_InstrDT['9'] = PLC_STACKTOP
+	#####
+	# PD C117 C119
+	PLC_WordAccessors.Setbits((PLC_STACKTOP and not PLC_InstrDT['10']), 'C117', 'C119')
+	PLC_InstrDT['10'] = PLC_STACKTOP
+	#####
+	# NETWORK 7
+	PLC_RUNGNUMBER = 7
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Boolean compare.
+	#
+	#####
+	# STRE CTD5 5
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataWord['CTD5'] == 5
+	#####
+	# ANDE CTD5 15
+	PLC_STACKTOP = PLC_STACKTOP and (PLC_DataWord['CTD5'] == 15)
+	#####
+	# ORE CTD5 25
+	PLC_STACKTOP = PLC_STACKTOP or (PLC_DataWord['CTD5'] == 25)
+	#####
+	# STRNE 5 CTD5
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = 5 != PLC_DataWord['CTD5']
+	#####
+	# ANDNE 15 CTD5
+	PLC_STACKTOP = PLC_STACKTOP and (15 != PLC_DataWord['CTD5'])
+	#####
+	# ORNE 25 CTD5
+	PLC_STACKTOP = PLC_STACKTOP or (25 != PLC_DataWord['CTD5'])
+	#####
+	# ANDSTR 
+	try:
+		PLC_STACKTOP = PLC_STACKTOP and PLC_LOGICSTACK[-1]
+		PLC_LOGICSTACK.pop()
+	except:
+		PLC_STACKTOP = False
+	#####
+	# STRGT CTD5 5
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataWord['CTD5'] > 5
+	#####
+	# ANDGT CTD5 15
+	PLC_STACKTOP = PLC_STACKTOP and (PLC_DataWord['CTD5'] > 15)
+	#####
+	# ORGT CTD5 25
+	PLC_STACKTOP = PLC_STACKTOP or (PLC_DataWord['CTD5'] > 25)
+	#####
+	# STRLT CTD5 5
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataWord['CTD5'] < 5
+	#####
+	# ANDLT CTD5 15
+	PLC_STACKTOP = PLC_STACKTOP and (PLC_DataWord['CTD5'] < 15)
+	#####
+	# ORLT CTD5 25
+	PLC_STACKTOP = PLC_STACKTOP or (PLC_DataWord['CTD5'] < 25)
+	#####
+	# ANDSTR 
+	try:
+		PLC_STACKTOP = PLC_STACKTOP and PLC_LOGICSTACK[-1]
+		PLC_LOGICSTACK.pop()
+	except:
+		PLC_STACKTOP = False
+	#####
+	# ORSTR 
+	try:
+		PLC_STACKTOP = PLC_STACKTOP or PLC_LOGICSTACK[-1]
+		PLC_LOGICSTACK.pop()
+	except:
+		PLC_STACKTOP = False
+	#####
+	# STRLE CTD5 5
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataWord['CTD5'] <= 5
+	#####
+	# ANDLE CTD5 15
+	PLC_STACKTOP = PLC_STACKTOP and (PLC_DataWord['CTD5'] <= 15)
+	#####
+	# ORLE CTD5 25
+	PLC_STACKTOP = PLC_STACKTOP or (PLC_DataWord['CTD5'] <= 25)
+	#####
+	# STRGE CTD5 5
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataWord['CTD5'] >= 5
+	#####
+	# ANDGE CTD5 15
+	PLC_STACKTOP = PLC_STACKTOP and (PLC_DataWord['CTD5'] >= 15)
+	#####
+	# ORGE CTD5 25
+	PLC_STACKTOP = PLC_STACKTOP or (PLC_DataWord['CTD5'] >= 25)
+	#####
+	# ANDSTR 
+	try:
+		PLC_STACKTOP = PLC_STACKTOP and PLC_LOGICSTACK[-1]
+		PLC_LOGICSTACK.pop()
+	except:
+		PLC_STACKTOP = False
+	#####
+	# ORSTR 
+	try:
+		PLC_STACKTOP = PLC_STACKTOP or PLC_LOGICSTACK[-1]
+		PLC_LOGICSTACK.pop()
+	except:
+		PLC_STACKTOP = False
+	#####
+	# OUT C120
+	PLC_DataBool['C120'] = PLC_STACKTOP
+	#####
+	# NETWORK 8
+	PLC_RUNGNUMBER = 8
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Up counters.
+	#
+	#####
+	# STR T8
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['T8']
+	#####
+	# STR SC7
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['SC7']
+	#####
+	# CNTU CT5 55
+	try:
+		PLC_TEMP1 = PLC_LOGICSTACK[-1]
+	except:
+		PLC_TEMP1 = False
+	PLC_CounterTimers.Counter(PLC_STACKTOP, False, PLC_TEMP1, 'CT5', 55, True)
+	#####
+	# NETWORK 9
+	PLC_RUNGNUMBER = 9
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# STR CT5
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['CT5']
+	#####
+	# TMR T8 5000 ms
+	PLC_CounterTimers.TimerTMR(PLC_STACKTOP, 'T8', 5000, 'ms')
+	#####
+	# NETWORK 10
+	PLC_RUNGNUMBER = 10
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Down counters.
+	#
+	#####
+	# STRPD T9
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['T9'] and not PLC_InstrDT['11']
+	PLC_InstrDT['11'] = PLC_DataBool['T9']
+	#####
+	# STR SC6
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['SC6']
+	#####
+	# ANDGE CTD6 10
+	PLC_STACKTOP = PLC_STACKTOP and (PLC_DataWord['CTD6'] >= 10)
+	#####
+	# CNTD CT6 10
+	try:
+		PLC_TEMP1 = PLC_LOGICSTACK[-1]
+	except:
+		PLC_TEMP1 = False
+	PLC_CounterTimers.Counter(False, PLC_STACKTOP, PLC_TEMP1, 'CT6', 10, False)
+	#####
+	# NETWORK 11
+	PLC_RUNGNUMBER = 11
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# STR T9
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['T9']
+	#####
+	# ORLE CTD6 5
+	PLC_STACKTOP = PLC_STACKTOP or (PLC_DataWord['CTD6'] <= 5)
+	#####
+	# COPY 60 CTD6
+	if (PLC_STACKTOP):
+		PLC_DataWord['CTD6'] = 60
+		PLC_DataBool['SC43'] = False
+		PLC_DataBool['SC44'] = False
+	#####
+	# NETWORK 12
+	PLC_RUNGNUMBER = 12
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# STR CT6
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['CT6']
+	#####
+	# TMR T9 9 sec
+	PLC_CounterTimers.TimerTMR(PLC_STACKTOP, 'T9', 9, 'sec')
+	#####
+	# NETWORK 13
+	PLC_RUNGNUMBER = 13
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Up / down counters.
+	#
+	#####
+	# STR T10
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['T10']
+	#####
+	# STR SC7
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['SC7']
+	#####
+	# STR SC6
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['SC6']
+	#####
+	# UDC CT7 25
+	try:
+		PLC_TEMP1 = PLC_LOGICSTACK[-1]
+		PLC_TEMP2 = PLC_LOGICSTACK[-2]
+	except:
+		PLC_TEMP1 = False
+		PLC_TEMP2 = False
+	PLC_CounterTimers.Counter(PLC_STACKTOP, PLC_TEMP1, PLC_TEMP2, 'CT7', 25, True)
+	#####
+	# NETWORK 14
+	PLC_RUNGNUMBER = 14
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# STR CT7
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['CT7']
+	#####
+	# TMR T10 9 sec
+	PLC_CounterTimers.TimerTMR(PLC_STACKTOP, 'T10', 9, 'sec')
+	#####
+	# NETWORK 15
+	PLC_RUNGNUMBER = 15
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // On and off delay timers.
+	#
+	#####
+	# STRN T5
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = not PLC_DataBool['T5']
+	#####
+	# TMR T5 100 ms
+	PLC_CounterTimers.TimerTMR(PLC_STACKTOP, 'T5', 100, 'ms')
+	#####
+	# TMROFF T7 3 day
+	PLC_CounterTimers.TimerTMROFF(PLC_STACKTOP, 'T7', 3, 'day')
+	#####
+	# NETWORK 16
+	PLC_RUNGNUMBER = 16
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // On delay accumulating timers.
+	#
+	#####
+	# STR C1
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['C1']
+	#####
+	# STR C2
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['C2']
+	#####
+	# ANDN C3
+	PLC_STACKTOP = PLC_STACKTOP and (not PLC_DataBool['C3'])
+	#####
+	# TMRA T6 1000 sec
+	try:
+		PLC_TEMP1 = PLC_LOGICSTACK[-1]
+	except:
+		PLC_TEMP1 = False
+	PLC_CounterTimers.TimerTMRA(PLC_STACKTOP, PLC_TEMP1, 'T6', 1000, 'sec')
+	#####
+	# NETWORK 17
+	PLC_RUNGNUMBER = 17
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Copy data.
+	#
+	#####
+	# STR C30
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['C30']
+	#####
+	# COPY 1000 DS1000
+	if (PLC_STACKTOP):
+		PLC_DataWord['DS1000'] = 1000
+		PLC_DataBool['SC43'] = False
+		PLC_DataBool['SC44'] = False
+	#####
+	# CPYBLK DS1000 DS1005 DS1010
+	if (PLC_STACKTOP and (not PLC_InstrDT['14'] or not 0)):
+		PLC_WordAccessors.CopyBlock('DS1000', 'DS1005', 'DS1010', 'DS')
+	PLC_InstrDT['14'] = PLC_STACKTOP
+	#####
+	# FILL 999 DS1020 DS1025
+	if (PLC_STACKTOP and (not PLC_InstrDT['15'] or not 0)):
+		PLC_WordAccessors.CopyFill(999, 'DS1020', 'DS1025', 'DS')
+	PLC_InstrDT['15'] = PLC_STACKTOP
+	#####
+	# UNPACK DH200 C40 C46
+	if (PLC_STACKTOP and (not PLC_InstrDT['16'] or not 0)):
+		PLC_WordAccessors.CopyUnpack('DH200', 'C40', 'C46')
+	PLC_InstrDT['16'] = PLC_STACKTOP
+	#####
+	# PACK C40 C46 DH200
+	if (PLC_STACKTOP and (not PLC_InstrDT['17'] or not 0)):
+		PLC_WordAccessors.CopyPack('C40', 'C46', 'DH200')
+	PLC_InstrDT['17'] = PLC_STACKTOP
+	#####
+	# NETWORK 18
+	PLC_RUNGNUMBER = 18
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Search.
+	#
+	#####
+	# STR C50
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['C50']
+	#####
+	# FINDEQ 1 DS2100 DS2110 DS2111 C111
+	if (PLC_STACKTOP and (not PLC_InstrDT['18'] or not 0)):
+		PLC_WordAccessors.Search(1,'KInt','DS2100','DS2110','DS2111','C111','==', 0)
+	PLC_InstrDT['18'] = PLC_STACKTOP
+	#####
+	# FINDGE DD112 DD100 DD110 DS2113 C112
+	if (PLC_STACKTOP and (not PLC_InstrDT['19'] or not 0)):
+		PLC_WordAccessors.Search(PLC_DataWord['DD112'],'DD','DD100','DD110','DS2113','C112','>=', 0)
+	PLC_InstrDT['19'] = PLC_STACKTOP
+	#####
+	# FINDGT "c" TXT100 TXT110 DS2115 C113
+	if (PLC_STACKTOP and (not PLC_InstrDT['20'] or not 0)):
+		PLC_WordAccessors.Search("c",'KTxtChar','TXT100','TXT110','DS2115','C113','>', 0)
+	PLC_InstrDT['20'] = PLC_STACKTOP
+	#####
+	# FINDLT 15 DS2100 DS2110 DS2117 C115 1
+	if (PLC_STACKTOP and (not PLC_InstrDT['21'] or not 1)):
+		PLC_WordAccessors.Search(15,'KInt','DS2100','DS2110','DS2117','C115','<', 0)
+	PLC_InstrDT['21'] = PLC_STACKTOP
+	#####
+	# FINDLE 15 DS2100 DS2110 DS2119 C115 1
+	if (PLC_STACKTOP and (not PLC_InstrDT['22'] or not 1)):
+		PLC_WordAccessors.Search(15,'KInt','DS2100','DS2110','DS2119','C115','<=', 0)
+	PLC_InstrDT['22'] = PLC_STACKTOP
+	#####
+	# FINDNE 15 DS2100 DS2110 DS2121 C115 1
+	if (PLC_STACKTOP and (not PLC_InstrDT['23'] or not 1)):
+		PLC_WordAccessors.Search(15,'KInt','DS2100','DS2110','DS2121','C115','!=', 0)
+	PLC_InstrDT['23'] = PLC_STACKTOP
+	#####
+	# NETWORK 19
+	PLC_RUNGNUMBER = 19
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Incremental search.
+	#
+	#####
+	# STR C50
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['C50']
+	#####
+	# FINDIEQ "cde" TXT100 TXT110 DS2112 C114
+	if (PLC_STACKTOP and (not PLC_InstrDT['24'] or not 0)):
+		PLC_WordAccessors.Search("cde",'KTxtStr','TXT100','TXT110','DS2112','C114','==', 1)
+	PLC_InstrDT['24'] = PLC_STACKTOP
+	#####
+	# FINDIGE 1 DS2100 DS2110 DS2114 C111
+	if (PLC_STACKTOP and (not PLC_InstrDT['25'] or not 0)):
+		PLC_WordAccessors.Search(1,'KInt','DS2100','DS2110','DS2114','C111','>=', 1)
+	PLC_InstrDT['25'] = PLC_STACKTOP
+	#####
+	# FINDIGT DD112 DD100 DD110 DS2116 C112
+	if (PLC_STACKTOP and (not PLC_InstrDT['26'] or not 0)):
+		PLC_WordAccessors.Search(PLC_DataWord['DD112'],'DD','DD100','DD110','DS2116','C112','>', 1)
+	PLC_InstrDT['26'] = PLC_STACKTOP
+	#####
+	# FINDILT 15 DS2100 DS2110 DS2118 C115 1
+	if (PLC_STACKTOP and (not PLC_InstrDT['27'] or not 1)):
+		PLC_WordAccessors.Search(15,'KInt','DS2100','DS2110','DS2118','C115','<', 1)
+	PLC_InstrDT['27'] = PLC_STACKTOP
+	#####
+	# FINDILE 15 DS2100 DS2110 DS2120 C115 1
+	if (PLC_STACKTOP and (not PLC_InstrDT['28'] or not 1)):
+		PLC_WordAccessors.Search(15,'KInt','DS2100','DS2110','DS2120','C115','<=', 1)
+	PLC_InstrDT['28'] = PLC_STACKTOP
+	#####
+	# FINDINE 15 DS2100 DS2110 DS2122 C115 1
+	if (PLC_STACKTOP and (not PLC_InstrDT['29'] or not 1)):
+		PLC_WordAccessors.Search(15,'KInt','DS2100','DS2110','DS2122','C115','!=', 1)
+	PLC_InstrDT['29'] = PLC_STACKTOP
+	#####
+	# NETWORK 20
+	PLC_RUNGNUMBER = 20
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Shift register
+	#
+	#####
+	# STR C3
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['C3']
+	#####
+	# STR SC6
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['SC6']
+	#####
+	# STR SC5
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['SC5']
+	#####
+	# SHFRG C130 C139
+	try:
+		PLC_TEMP1 = PLC_LOGICSTACK[-1]
+		PLC_TEMP2 = PLC_LOGICSTACK[-2]
+	except:
+		PLC_TEMP1 = False
+		PLC_TEMP2 = False
+	PLC_WordAccessors.ShiftRegister(PLC_STACKTOP, PLC_TEMP1, PLC_InstrDT['30'], PLC_TEMP2, 'C130', 'C139')
+	PLC_InstrDT['30'] = PLC_TEMP1
+	#####
+	# NETWORK 21
+	PLC_RUNGNUMBER = 21
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# STR C139
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['C139']
+	#####
+	# OUT C25
+	PLC_DataBool['C25'] = PLC_STACKTOP
+	#####
+	# NETWORK 22
+	PLC_RUNGNUMBER = 22
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Decimal and hex math.
+	#
+	#####
+	# STR SC7
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['SC7']
+	#####
+	# OR T100
+	PLC_STACKTOP = PLC_STACKTOP or PLC_DataBool['T100']
+	#####
+	# COPY 2 DS2125
+	if (PLC_STACKTOP):
+		PLC_DataWord['DS2125'] = 2
+		PLC_DataBool['SC43'] = False
+		PLC_DataBool['SC44'] = False
+	#####
+	# // MATHDEC DF1 0 (1 + DS2125) ^ 2 + SQRT(PI)
+	#
+	#####
+	# COPY 4 DH200
+	if (PLC_STACKTOP):
+		PLC_DataWord['DH200'] = 4
+		PLC_DataBool['SC43'] = False
+		PLC_DataBool['SC44'] = False
+	#####
+	# // MATHHEX DH201 0 (LSH(DH200, 2h) + 1h) * 2h
+	#
+	#####
+	# NETWORK 23
+	PLC_RUNGNUMBER = 23
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // SUM is an extra instruction.
+	#
+	#####
+	# STR SC1
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['SC1']
+	#####
+	# SUM DS9000 DS9010 DS10000 1
+	if (PLC_STACKTOP and (not PLC_InstrDT['33'] or not 1)):
+		PLC_WordAccessors.SumRegisters('DS9000', 'DS9010', 'DS10000', 'DS')
+	PLC_InstrDT['33'] = PLC_STACKTOP
+	#####
+	# NETWORK 24
+	PLC_RUNGNUMBER = 24
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // For/next.
+	#
+	#####
+	# STR SC2
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['SC2']
+	#####
+	# FOR 100
+	PLC_TEMP1 = (not PLC_InstrDT['34'] or not 0)
+	PLC_InstrDT['34'] = PLC_STACKTOP
+	if (PLC_STACKTOP and PLC_TEMP1):
+		for PLC_ForNext in range(100):
+	#####
+			# OUT C130
+			PLC_DataBool['C130'] = PLC_STACKTOP
+			#####
+			# NEXT 
+			pass
+			#####
+	# NETWORK 25
+	PLC_RUNGNUMBER = 25
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Conditional return.
+	#
+	#####
+	# STR SC7
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['SC7']
+	#####
+	# RTC 
+	if PLC_STACKTOP:
+		PLC_SUBROUTINE, PLC_RUNGNUMBER = PLC_CALLSTACK.StackTop()
+		PLC_CALLSTACK.PopSub()
+		return
+	#####
+	# NETWORK 26
+	PLC_RUNGNUMBER = 26
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# // Unconditional return.
+	#
+	#####
+	# RT 
+	PLC_SUBROUTINE, PLC_RUNGNUMBER = PLC_CALLSTACK.StackTop()
+	PLC_CALLSTACK.PopSub()
+	return
+	#####
+# // Tank Demo Soft Logic ProgramThis program is used to drive the HMI tank simulation.
+#
+#####
+# // 20-Jul-2009
+#
+#####
+# NETWORK 1
+PLC_RUNGNUMBER = 1
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# // Map the push buttons to the pilot lights.
+#
+#####
+# // PB1 and PL1
+#
+#####
+# STR X1
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = PLC_DataBool['X1']
+#####
+# OUT Y1
+PLC_DataBool['Y1'] = PLC_STACKTOP
+#####
+# NETWORK 2
+PLC_RUNGNUMBER = 2
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# // PB2 and PL2
+#
+#####
+# STR X2
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = PLC_DataBool['X2']
+#####
+# OUT Y2
+PLC_DataBool['Y2'] = PLC_STACKTOP
+#####
+# NETWORK 3
+PLC_RUNGNUMBER = 3
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# // PB3 and PL3
+#
+#####
+# STR X3
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = PLC_DataBool['X3']
+#####
+# OUT Y3
+PLC_DataBool['Y3'] = PLC_STACKTOP
+#####
+# NETWORK 4
+PLC_RUNGNUMBER = 4
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# // Copy PB4 to PL4
+#
+#####
+# STR SC1
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = PLC_DataBool['SC1']
+#####
+# COPY XD1 YD1
+if (PLC_STACKTOP):
+	PLC_DataWord['YD1'] = PLC_DataWord['XD1']
+	PLC_DataBool['SC43'] = False
+	PLC_DataBool['SC44'] = False
+#####
+# NETWORK 13
+PLC_RUNGNUMBER = 13
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# // Demonstrate ladder representation. This subroutine doesn't actually do anything useful.
+#
+#####
+# STR SC1
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = PLC_DataBool['SC1']
+#####
+# CALL LadderDemo
+if PLC_STACKTOP:
+	PLC_CALLSTACK.PushSub(PLC_SUBROUTINE, PLC_RUNGNUMBER)
+	PLC_Subroutine_LadderDemo()
+#####
+# NETWORK 15
+PLC_RUNGNUMBER = 15
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# // This demonstrates a conditional end.
+#
+#####
+# STRN SC1
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = not PLC_DataBool['SC1']
+#####
+# ENDC 
+if PLC_STACKTOP: raise PLC_ExitCode('normal_end_requested')
+#####
+# NETWORK 16
+PLC_RUNGNUMBER = 16
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# // This demonstrates an unconditional end.
+#
+#####
+# END 
+raise PLC_ExitCode('normal_end_requested')
+#####
+# // The main program ends here.
+#
+#####
