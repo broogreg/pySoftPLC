@@ -861,13 +861,19 @@ def AssembleSubr(subrname, subrcomments, ildata):
 	Returns (list) = The formatted subroutine IL, including subroutine name and comments.
 	"""
 	sbrblock = []
+	temp = []
 	# 'main' is not a subroutine.
 	if subrname != 'main':
 		sbrblock.append('%s %s' % (DLCkTemplates.InstrTypeLookup['sbr'], subrname))
 	sbrblock.append('%s %s' % (DLCkTemplates.InstrTypeLookup['comment'], subrcomments))
 	# We have to flatten the nested list.
 	# TODO: Change the list flattening technique to use chain.
-	sbrblock.extend(sum([il['ildata'] for il in ildata], []))
+	#sbrblock.extend(sum([il['ildata'] for il in ildata], []))
+	# Converted back to for loop for troubleshooting
+	for il in ildata:
+		temp += il['ildata']
+	sbrblock.append(temp)
+	
 	return sbrblock
 
 

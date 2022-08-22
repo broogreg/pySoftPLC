@@ -694,7 +694,7 @@ class LadderFormat:
 		Returns: (string) = The calculated hash, or None if error.
 		"""
 		confighash = hashlib.md5()
-		confighash.update(str(sigdata))
+		confighash.update(str(sigdata).encode('utf-8'))
 		return confighash.hexdigest()
 
 
