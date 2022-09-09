@@ -1,0 +1,59 @@
+# SBR SimpleConveyor
+def PLC_Subroutine_SimpleConveyor():
+	global PLC_RUNGNUMBER
+	global PLC_SUBROUTINE
+	PLC_RUNGNUMBER = 0
+	PLC_SUBROUTINE = 'SimpleConveyor'
+	PLC_STACKTOP = False
+#####
+	# NETWORK 1
+	PLC_RUNGNUMBER = 1
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# STR X1
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['X1']
+	#####
+	# AND X2
+	PLC_STACKTOP = PLC_STACKTOP and (PLC_DataBool['X2'])
+	#####
+	# STR X3
+	PLC_LOGICSTACK.append(PLC_STACKTOP)
+	PLC_STACKTOP = PLC_DataBool['X3']
+	#####
+	# OR Y1
+	PLC_STACKTOP = PLC_STACKTOP or PLC_DataBool['Y1']
+	#####
+	# ANDSTR 
+	try:
+		PLC_STACKTOP = PLC_STACKTOP and PLC_LOGICSTACK[-1]
+		PLC_LOGICSTACK.pop()
+	except:
+		PLC_STACKTOP = False
+	#####
+	# OUT Y1
+	PLC_DataBool['Y1'] = PLC_STACKTOP
+	#####
+	# NETWORK 2
+	PLC_RUNGNUMBER = 2
+	PLC_LOGICSTACK = [False]
+	PLC_STACKTOP = False
+	#####
+	# END 
+	raise PLC_ExitCode('normal_end_requested')
+	#####
+# NETWORK 1
+PLC_RUNGNUMBER = 1
+PLC_LOGICSTACK = [False]
+PLC_STACKTOP = False
+#####
+# STR SC1
+PLC_LOGICSTACK.append(PLC_STACKTOP)
+PLC_STACKTOP = PLC_DataBool['SC1']
+#####
+# CALL SimpleConveyor
+if PLC_STACKTOP:
+	PLC_CALLSTACK.PushSub(PLC_SUBROUTINE, PLC_RUNGNUMBER)
+	PLC_Subroutine_SimpleConveyor()
+#####

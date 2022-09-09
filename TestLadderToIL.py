@@ -1,20 +1,25 @@
 from mbsoftlogicck import DLCkInstructions,  PLClad2il
 
 import json
-import ast
 
-with open('LadderDictionaryDump_fmt.txt', 'r') as f:
 
-            # Read the first line:
-            subrdata = f.read()
-## make dictionary json           
-#subrdatadict = json.loads(subrdata)
+#with open('LadderDictionaryDump_fmt.txt', 'r') as f:
 
-subrdatadict = ast.literal_eval(subrdata)
+            ## Read the first line:
+            #subrdata = f.read()
+### make dictionary json           
+##subrdatadict = json.loads(subrdata)
+
+#subrdatadict = ast.literal_eval(subrdata)
+
+# Read in json file
+with open('simpleconveyor_subr.txt.json', 'r') as f:
+    subrdatadict = json.load(f)
 
 # Convert the editor data to IL source for a complete subroutine.
 analyser = PLClad2il.SubrAnalyser(DLCkInstructions.InstrDefList)
-subrname, subrcomments, decodedilsource = analyser.DecodeSubroutine(subrdatadict['main'])
+#subrname, subrcomments, decodedilsource = analyser.DecodeSubroutine(subrdatadict['main'])
+subrname, subrcomments, decodedilsource = analyser.DecodeSubroutine(subrdatadict,'SimpleConveyor')
 
 # Assemble the subroutine code.
 subril = PLClad2il.AssembleSubr(subrname, subrcomments, decodedilsource)
