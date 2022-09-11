@@ -785,7 +785,7 @@ class SubrAnalyser:
 
 
 	########################################################
-	def DecodeSubroutine(self, subrmatrix):
+	def DecodeSubroutine(self, subrmatrix, subrname):
 		"""Decode a subroutine matrix from the client and convert
 		it to IL.
 		Parameters: subrmatrix (dict) = A dictionary containing
@@ -794,13 +794,18 @@ class SubrAnalyser:
 			runglist (list) = List of rungs.
 		"""
 		# The name of the subroutine.
-		self._SubroutineName = subrmatrix['subrname']
+		
+		#### TO DO: Fix code that generates json file to add subrname as main if not a subroutine
+		#self._SubroutineName = subrmatrix['subrname']
+		self._SubroutineName = subrname
+		#########################################################################################
+		
 		# The subroutine comments.
-		self._SubrComments = subrmatrix['subrcomments']
+		self._SubrComments = subrmatrix[subrname]['subrcomments']
 		# The signature (checksum) of the subroutine.
-		self._Signature = subrmatrix['signature']
+		self._Signature = subrmatrix[subrname]['signature']
 		# The list of rung data.
-		self._RungData = subrmatrix['subrdata']
+		self._RungData = subrmatrix[subrname]['subrdata']
 
 		self._RungList = []
 
@@ -861,13 +866,19 @@ def AssembleSubr(subrname, subrcomments, ildata):
 	Returns (list) = The formatted subroutine IL, including subroutine name and comments.
 	"""
 	sbrblock = []
+	temp = []
 	# 'main' is not a subroutine.
 	if subrname != 'main':
 		sbrblock.append('%s %s' % (DLCkTemplates.InstrTypeLookup['sbr'], subrname))
 	sbrblock.append('%s %s' % (DLCkTemplates.InstrTypeLookup['comment'], subrcomments))
 	# We have to flatten the nested list.
 	# TODO: Change the list flattening technique to use chain.
-	sbrblock.extend(sum([il['ildata'] for il in ildata], []))
+	#sbrblock.extend(sum([il['ildata'] for il in ildata], []))
+	# Converted back to for loop for troubleshooting
+	for il in ildata:
+		temp += il['ildata']
+	sbrblock.append(temp)
+	
 	return sbrblock
 
 

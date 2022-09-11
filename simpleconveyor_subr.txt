@@ -1,0 +1,16 @@
+NETWORK 1
+STR SC1
+CALL SimpleConveyor
+
+SBR SimpleConveyor
+
+NETWORK 1
+STR X1
+AND X2
+STR X3
+OR Y1
+ANDSTR
+OUT Y1
+
+NETWORK 2
+END

@@ -1,0 +1,118 @@
+{'main': {'subrdata': [
+		       {
+			'rungtype': 'empty', 
+			'comment': 'Program to drive the FactoryIO Scene Simple Conveyor08/13/2022 Gregory BrooksX1=EStop, X2=Stop, X3=Start, Y1=Belt ConveyorX1 X2 X3 Y1|--] [--] [--] [--( )| || Y1 |--] [--', 
+			'ildata': ['// Program to drive the FactoryIO Scene Simple Conveyor\n', '// 08/13/2022 Gregory Brooks\n', '//\n', '// X1=EStop, X2=Stop, X3=Start, Y1=Belt Conveyor\n', '//\n', '//    X1   X2   X3   Y1\n', '// |--] [--] [--] [--( )\n', '//            |     |\n', '//            | Y1  |\n', '//            --] [--\n'], 
+			'matrixdata': []
+		       }, 
+		       {
+		       'rungtype': 'single', 
+		       'comment': '', 
+		       'ildata': [
+				  'NETWORK 1\n', 
+				  'STR X1\n', 
+				  'AND X2\n', 
+				  'STR X3\n', 
+				  'OR Y1\n', 
+				  'ANDSTR\n', 
+				  'OUT Y1\n'
+				 ], 
+		       'matrixdata': [
+				      {
+				       'type': 'inp', 
+				       'row': 0, 
+				       'col': 0, 
+				       'addr': ['X1'], 
+				       'value': 'noc', 
+				       'monitor': ('bool', 'X1')
+				      }, 
+				      {
+				       'type': 'inp', 
+				       'row': 0, 
+				       'col': 1, 
+				       'addr': ['X2'], 
+				       'value': 'noc', 
+				       'monitor': ('bool', 'X2')
+				      }, 
+				      {
+				       'type': 'inp', 
+				       'row': 0, 
+				       'col': 2, 
+				       'addr': [], 
+				       'value': 'branchttr', 
+				       'monitor': ('none',)
+				      }, 
+				      {
+				       'type': 'inp', 
+				       'row': 0, 
+				       'col': 3, 
+				       'addr': ['X3'], 
+				       'value': 'noc', 
+				       'monitor': ('bool', 'X3')
+				      }, 
+				      {
+				       'type': 'inp', 
+				       'row': 0, 
+				       'col': 4, 
+				       'addr': [], 
+				       'value': 'branchttl', 
+				       'monitor': ('none',)
+				      }, 
+				      {
+				       'type': 'inp', 
+				       'row': 1, 
+				       'col': 2, 
+				       'addr': [], 
+				       'value': 'branchr', 
+				       'monitor': ('none',)
+				      }, 
+				      {
+				       'type': 'inp', 
+				       'row': 1, 
+				       'col': 3, 
+				       'addr': ['Y1'], 
+				       'value': 'noc', 
+				       'monitor': ('bool', 'Y1')
+				      }, 
+				      {
+				       'type': 'inp', 
+				       'row': 1, 
+				       'col': 4, 
+				       'addr': [], 
+				       'value': 'branchl', 
+				       'monitor': ('none',)
+				      }, 
+				      {
+				       'type': 'outp', 
+				       'row': 0, 
+				       'col': 0, 
+				       'addr': ['Y1'], 
+				       'value': 'out', 
+				       'monitor': ('bool', 'Y1')
+				      }
+				     ]
+		       },
+		       {
+		        'rungtype': 'single',  
+			'comment': '', 
+			'ildata': [
+				   'NETWORK 2\n', 
+				   'END\n'
+				  ], 
+			'matrixdata': [
+				       {
+					'type': 'outp', 
+					'row': 0, 
+					'col': 0, 
+					'addr': [], 
+					'value': 'end', 
+					'monitor': ('none',)
+				       }
+				      ]
+		       }
+		      ],
+	  'subrname': 'main',	      
+	  'subrcomments': '', 
+	  'signature': '19b69689cb14a2415fc703d18f2a64e2'
+	 }
+}
